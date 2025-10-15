@@ -30,6 +30,7 @@ The user will provide a ticket for you to read and begin researching.
    **Phase 1 - Locate (Codebase & Thoughts):**
    - Identify all topics/components/areas you need to locate
    - Group related topics into coherent batches
+   - Spawn **web-search-researcher** agents in parallel to gather external authorative context and capturing provenance
    - Spawn **codebase-locator** agents in parallel for each topic group to find WHERE files and components live
    - Simultaneously spawn **thoughts-locator** agents in parallel to discover relevant documents
    - **WAIT** for all locator agents to complete before proceeding
@@ -117,6 +118,7 @@ Use the following metadata for the research document frontmatter:
      [Relevant insights from thoughts/ directory with references]
      - `thoughts/research/something.md` - Historical decision about X
      - `thoughts/plans/build-thing.md` - Past exploration of Y
+     - `thoughts/docs/YYYY-MM-DD_some-topic.md` - Past searches of Z topic
 
      ## Related Research
      [Links to other research documents in thoughts/shared/research/]
