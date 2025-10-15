@@ -112,4 +112,46 @@ export async function pull(
   }
 
   console.log(`\n✅ Updated ${filesToCopy.length} file${filesToCopy.length === 1 ? "" : "s"}`);
+
+  // Copy dependency files for tool support
+  await copyDependencyFiles(sourceDir, targetBase);
+}
+
+async function copyDependencyFiles(sourceDir: string, targetBase: string) {
+  const dependencyFiles = [
+    { source: 'package.opencode.json', target: 'package.json' },
+    { source: 'bun.opencode.lock', target: 'bun.lock' }
+  ];
+
+  let copiedCount = 0;
+
+  for (const { source, target } of dependencyFiles) {
+    const sourceFile = join(sourceDir, 'dependencies', source);
+    const targetFile = join(targetBase, target);
+
+    if (existsSync(sourceFile)) {
+      try {
+        // Check if target file exists and is different
+        let shouldCopy = true;
+        if (existsSync(targetFile)) {
+          const sourceContent = await Bun.file(sourceFile).text();
+          const targetContent = await Bun.file(targetFile).text();
+          shouldCopy = sourceContent !== targetContent;
+        }
+
+        if (shouldCopy) {
+          await copyFile(sourceFile, targetFile);
+          console.log(`  ✅ Updated: ${target}`);
+          copiedCount++;
+        }
+      } catch (error) {
+        console.log(`  ⚠️  Warning: Could not copy ${source} to ${target}`);
+      }
+    }
+  }
+
+  if (copiedCount > 0) {
+    console.log(`\n📦 Updated ${copiedCount} dependency file${copiedCount === 1 ? "" : "s"}`);
+    console.log("💡 Run 'bun install' or 'npm install' in the .opencode directory to install tool dependencies");
+  }
 }
