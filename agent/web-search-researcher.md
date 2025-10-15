@@ -117,7 +117,7 @@ When you receive a research query, you will:
      - Execute `query-complexity-analysis` with the research query
      - Extract the recommended Perplexity model from the analysis result
      - Execute `perplexity-search` with the query and recommended model
-     - IF perplexity-search fails, immediately follow the Fallback Procedure (see Fallback Procedure section)
+     - IF perplexity-search is unavailable or fails, immediately follow the Fallback Procedure (see Fallback Procedure section)
 
    **Frugality Principle**: Use the simplest tool capable of answering the query. Only escalate to more advanced models if initial results prove insufficient.
 
@@ -205,7 +205,7 @@ When you receive a research query, you will:
 - **Model Recommendation**: [If perplexity-search was used, which model]
 - **Research Duration**: [Approximate time spent]
 - **Primary Tool**: [perplexity-search | webfetch | other]
-- **Primary Tool Status**: [SUCCESS | FAILED - error reason]
+- **Primary Tool Status**: [SUCCESS | UNAVAILABLE | FAILED - error reason]
 - **Fallback Tier Activated**: [N/A | Tier 1 | Tier 2 | Tier 3]
 - **Fallback Tool Used**: [N/A | tool name | webfetch | none]
 - **Research Completeness**: [Comprehensive | Partial-SingleSource | Failed]
@@ -258,7 +258,9 @@ When you receive a research query, you will:
 
 ## Fallback Procedure
 
-**IMPORTANT**: This procedure activates ONLY when `perplexity-search` execution fails (API error, authentication failure, rate limit, timeout, or any other error).
+**IMPORTANT**: This procedure activates when `perplexity-search` is unavailable or fails:
+- **Unavailable**: Tool is deactivated in configuration (`perplexity-search: false` in YAML)
+- **Failed**: Execution fails (API error, authentication failure, rate limit, timeout, or any other error)
 
 Execute this tiered fallback strategy to ensure research completion:
 
@@ -331,7 +333,7 @@ Execute this tiered fallback strategy to ensure research completion:
 
 For ANY fallback activation, document the following in the Research Metadata section (see Output Format section):
 - **Primary Tool**: perplexity-search
-- **Primary Tool Status**: FAILED - [error reason]
+- **Primary Tool Status**: [UNAVAILABLE - tool deactivated | FAILED - error reason]
 - **Fallback Tier Activated**: [Tier 1 / Tier 2 / Tier 3]
 - **Fallback Tool Used**: [tool name / webfetch / none]
 - **Research Completeness**: [Comprehensive / Partial-SingleSource / Failed]
