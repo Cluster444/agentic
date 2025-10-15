@@ -1,7 +1,7 @@
 import { tool } from '@opencode-ai/plugin';
 
 export default tool({
-  description: 'Search using Perplexity API with specified model',
+  description: 'Search using Perplexity API with specified model.',
   args: {
     query: tool.schema.string().min(1).max(2000, 'Query must be 2000 characters or less'),
     model: tool.schema.enum(['sonar-pro', 'sonar-reasoning-pro', 'sonar-deep-research']).default('sonar-pro')

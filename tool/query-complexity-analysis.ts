@@ -1,7 +1,7 @@
 import { tool } from '@opencode-ai/plugin';
 
 export default tool({
-  description: 'Simple heuristic to recommend which Perplexity model to use',
+  description: 'Simple heuristic to recommend which Perplexity model to use.',
   args: {
     query: tool.schema.string().min(1, 'Query cannot be empty')
   },
@@ -61,7 +61,7 @@ export default tool({
       return `Recommended model: sonar-reasoning-pro\nReasoning: Complex reasoning keywords detected`;
     }
 
-    // 3. Technical + temporal (current tech) → reasoning model  
+    // 3. Technical + temporal (current tech) → reasoning model
     if (technicalPattern.test(q) && temporalPattern.test(q)) {
       return `Recommended model: sonar-reasoning-pro\nReasoning: Technical query with temporal context`;
     }
