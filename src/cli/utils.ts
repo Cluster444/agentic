@@ -15,6 +15,27 @@ export interface FileSync {
   status: 'up-to-date' | 'outdated' | 'missing';
 }
 
+export interface DependencyStatus {
+  packageJsonExists: boolean;
+  nodeModulesExists: boolean;
+  pluginInstalled: boolean;
+  perplexityApiKeySet: boolean;
+}
+
+export async function checkDependencyStatus(projectPath: string): Promise<DependencyStatus> {
+  const opencodeDir = join(projectPath, ".opencode");
+  const packageJsonPath = join(opencodeDir, "package.json");
+  const nodeModulesPath = join(opencodeDir, "node_modules");
+  const pluginPath = join(nodeModulesPath, "@opencode-ai", "plugin");
+  
+  return {
+    packageJsonExists: existsSync(packageJsonPath),
+    nodeModulesExists: existsSync(nodeModulesPath),
+    pluginInstalled: existsSync(pluginPath),
+    perplexityApiKeySet: !!process.env.PERPLEXITY_API_KEY,
+  };
+}
+
 async function* walkDir(dir: string): AsyncGenerator<string> {
   const files = await readdir(dir, { withFileTypes: true });
   for (const file of files) {
