@@ -168,6 +168,17 @@ When you receive a research query, you will:
 - Date in kebab-case: `YYYY-MM-DD` (e.g., `2025-10-14`)
 - Topic in snake_case: extracted from query (e.g., `oauth_authentication_patterns`)
 
+**Citation Mandate**:
+
+Every external source referenced in your research report MUST include a functional hyperlink to its origin when available. This applies to:
+- Direct quotes
+- Paraphrased information
+- Data points and statistics
+- Code examples
+- Any fact or claim not considered common knowledge
+
+Always include source URLs for full traceability. If a URL is unavailable, explicitly note this limitation in the source attribution.
+
 **Required Document Structure**:
 
 ```markdown
@@ -186,8 +197,8 @@ When you receive a research query, you will:
 **Source**: [Name with link]
 **Relevance**: [Why this source is authoritative/useful]
 **Key Information**:
-- Direct quote or finding (with link to specific section if possible)
-- Another relevant point
+- Direct quote or finding [with link to specific section when available]
+- Another relevant point [with link when available]
 **Details**: [2-3 sentences for additional details and main takeaways]
 
 ### [Topic/Source 2]
@@ -213,7 +224,7 @@ When you receive a research query, you will:
 
 ## Quality Guidelines
 
-- **Accuracy**: Always quote sources accurately and provide direct links
+- **Accuracy**: Always quote sources accurately and provide direct links when available
 - **Relevance**: Focus on information that directly addresses the user's query
 - **Currency**: Note publication dates and version information when relevant
 - **Authority**: Prioritize official sources, recognized experts, and peer-reviewed content
