@@ -8,6 +8,12 @@ export default tool({
   },
   async execute(args) {
     const { query, model } = args;
+
+    // Model-specific configuration
+    const temperature = model === 'sonar-pro' ? 0.2
+      : model === 'sonar-reasoning-pro' ? 0.3
+        : 0.4;
+
     // Environment variable validation
     const apiKey = process.env.PERPLEXITY_API_KEY;
     if (!apiKey) {
@@ -27,7 +33,16 @@ export default tool({
       },
       body: JSON.stringify({
         model,
-        messages: [{ role: 'user', content: query }]
+        messages: [{ role: 'user', content: query }],
+        temperature,
+        search_mode: 'academic',
+        media_response: {
+          overrides: {
+            return_videos: false,
+            return_images: false
+          }
+        },
+        ...(model === 'sonar-deep-research' && { reasoning_effort: 'high' })
       })
     });
 
