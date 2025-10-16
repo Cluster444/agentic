@@ -62,6 +62,16 @@ cd ~/projects/my-app
 agentic pull
 ```
 
+### Enable Web Research (Optional)
+
+For external web research capabilities with the `web-search-researcher` agent:
+
+1. Get a Perplexity API key from [https://www.perplexity.ai/settings/api](https://www.perplexity.ai/settings/api)
+2. Set environment variable: `export PERPLEXITY_API_KEY="pplx-your-key"`
+3. Install tool dependencies: `cd .opencode && bun install`
+
+Web research results are cached in `thoughts/docs/` to avoid duplicate API calls.
+
 ### Development Workflow
 
 1. Use the **ticket** command to work with the agent to build out ticket details

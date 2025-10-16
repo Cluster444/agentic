@@ -37,6 +37,8 @@ agentic pull --ignore-frontmatter
 **What it does:**
 - Creates `.opencode` directory if it doesn't exist
 - Copies all files from `agent/` and `command/` directories
+- Copies custom tools from `tool/` directory
+- Copies dependency files (package.json, bun.lock) for tool support
 - Preserves directory structure
 - Reports progress for each file copied
 - When `--ignore-frontmatter` is used: preserves existing frontmatter in target .md files
@@ -44,14 +46,18 @@ agentic pull --ignore-frontmatter
 **Output:**
 ```
 📦 Pulling to: /home/user/projects/my-app/.opencode
-📁 Including: agent, command
+📁 Including: agent, command, tool
 
   ✓ Copied: agent/codebase-analyzer.md
   ✓ Copied: agent/codebase-locator.md
   ✓ Copied: command/research.md
   ✓ Copied: command/plan.md
+  ✓ Copied: tool/perplexity-search.ts
+  ✓ Updated: package.json
 
-✅ Pulled 10 files
+✅ Updated 14 files
+📦 Updated 2 dependency files
+💡 Run 'bun install' in the .opencode directory to install tool dependencies
 ```
 
 ### `agentic status [project-path]`

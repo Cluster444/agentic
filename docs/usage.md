@@ -73,6 +73,7 @@ This produces a research document in `thoughts/research/` with findings about:
 - Relevant files and components
 - Architecture patterns to follow
 - Integration points
+- External best practices (when web research is enabled)
 
 ### 3. Planning Phase
 

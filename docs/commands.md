@@ -35,7 +35,8 @@ Example:
 2. Spawns codebase-locator agents for discovery
 3. Spawns analyzer agents for deep dives
 4. Searches thoughts/ for historical context
-5. Synthesizes findings into research document
+5. Optionally spawns web-search-researcher for external sources
+6. Synthesizes findings into research document
 
 **Output**: `thoughts/research/YYYY-MM-DD_topic.md`
 
