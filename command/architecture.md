@@ -1,10 +1,10 @@
 ---
-description: Initialize architecture documentation for a new project. Creates foundational design documents in thoughts/architecture/ directory.
+description: Initialize or refine architecture documentation for a new project. Creates or updates foundational design documents in thoughts/architecture/ directory.
 ---
 
-# Initialize Architecture Documentation
+# Architecture Documentation
 
-You are creating the foundational architecture documentation structure for a project. These documents guide both human developers and AI agents throughout the development lifecycle by serving as the single source of truth for design decisions, technical constraints, and system behavior.
+You are creating or refining the foundational architecture documentation structure for a project. These documents guide both human developers and AI agents throughout the development lifecycle by serving as the single source of truth for design decisions, technical constraints, and system behavior.
 
 ## Steps to follow:
 
@@ -113,9 +113,9 @@ Keep follow-up questions focused and skip those where answers are obvious from e
 
 Create `thoughts/architecture/` directory.
 
-### 4. Generate core architecture documents (PATH B only)
+### 4. Generate architecture documents (PATH B only)
 
-Create these **required** documents with appropriate placeholder content:
+Create **core documents** (always required):
 
 **thoughts/architecture/overview.md** - High-level navigation guide
 - Synopsis of each architecture document
@@ -137,7 +137,7 @@ Create these **required** documents with appropriate placeholder content:
 - Data relationships
 - Domain terminology
 
-**thoughts/architecture/testing-strategy.md** - Testing approach
+**thoughts/architecture/testing-strategy.md**- Testing approach
 - Unit testing conventions and tools
 - Integration testing patterns
 - End-to-end testing approach
@@ -150,48 +150,29 @@ Create these **required** documents with appropriate placeholder content:
 - Branching strategy
 - CI/CD pipeline
 - Documentation maintenance
-
-**thoughts/architecture/persistence.md** - Data storage
+comunque a
+**thoughts/architecture/persistence.md**- Data storage
 - Storage technologies and versions
 - Schema design principles
 - Migration strategy
 - Caching approach
 - Backup and recovery procedures
 
-### 5. Generate optional documents based on context (PATH B only)
+Create **optional documents** based on context from step 2B, for example:
 
-Based on user's responses in step 2B, create applicable optional documents:
+- **thoughts/architecture/api-design.md** (if project has APIs) - Endpoints, auth, versioning, request/response formats, error handling
+- **thoughts/architecture/cli-design.md** (if project has CLI) - Commands, configuration, output formatting, error handling
+- **thoughts/architecture/event-bus.md** (if project uses events) - Event types/schemas, pub/sub patterns, error handling
 
-**thoughts/architecture/api-design.md** (if project has APIs)
-- Endpoint design patterns
-- Authentication and authorization
-- Versioning strategy
-- Request/response formats
-- Error handling conventions
+### 5. Populate documents with project-specific content (PATH B only)
 
-**thoughts/architecture/cli-design.md** (if project has CLI)
-- Command structure
-- Configuration approach
-- Output formatting
-- Error handling
-
-**thoughts/architecture/event-bus.md** (if project uses events)
-- Event types and schemas
-- Publishing and subscription patterns
-- Error handling and retries
-
-### 6. Populate documents with project-specific content (PATH B only)
-
-For each document created:
-
-1. Use a consistent template structure:
+Use this consistent template structure:
 ```markdown
 # [Document Title]
 
 > This document describes [specific purpose]. Last updated: [date]
 
 ## Overview
-
 [Brief description of this document's role in the architecture]
 
 ## [Section 1]
@@ -202,38 +183,27 @@ For each document created:
 
 [Content based on user's project context from step 2B]
 
+[... Additional Sections as Needed ...]
+
 ## TODO
 
 - [ ] [Specific decision or detail needed]
 - [ ] [Another item requiring future clarification]
 
 ## Related Documentation
-
-- [Link to related architecture document]
+- [Links to related architecture documents]
 ```
 
-2. Use responses from step 2B to populate content:
-   - Incorporate technology stack details
-   - Document infrastructure dependencies mentioned
-   - Include business entities and workflows described
-   - Reflect build/deployment tooling discussed
+Populate with user's responses from step 2B. Use placeholder text only for uncovered areas ("Describe [specific aspect not yet discussed]", "Document [decision to be made later]"). Cross-reference related documents.
 
-3. Use placeholder text only for areas not covered in interview:
-   - "Describe [specific aspect not yet discussed]"
-   - "Document [decision to be made later]"
+### 6. Present completion summary
 
-4. Add TODO sections for project-specific decisions still needed
-5. Cross-reference related documents
-
-### 7. Present completion summary
-
-**For PATH A (Refine Mode):**
+**PATH A (Refine Mode):**
 ```markdown
 Architecture documentation updated in thoughts/architecture/
 
 Documents refined:
   ✓ [list of updated documents with brief change summary]
-
 Changes made:
   - [summary of key updates]
   - [alignment improvements]
@@ -244,7 +214,7 @@ Next steps:
 3. Continue iterating as implementation evolves
 ```
 
-**For PATH B (Create Mode):**
+**PATH B (Create Mode):**
 ```markdown
 Architecture documentation initialized in thoughts/architecture/
 
@@ -255,11 +225,7 @@ Core documents created:
   ✓ testing-strategy.md - Testing approach
   ✓ development-workflow.md - Development process
   ✓ persistence.md - Data storage design
-
-Optional documents created:
-  ✓ api-design.md (if applicable)
-  ✓ cli-design.md (if applicable)
-  ✓ event-bus.md (if applicable)
+Optional documents (if applicable): ✓ [e.g. api-design.md / cli-design.md / event-bus.md]
 
 Next steps:
 1. Review each document and fill in TODO sections
@@ -279,46 +245,41 @@ Use the todowrite tool to create a structured task list, marking each as pending
 - Avoid technology-specific examples unless universal
 - Use phrases like "Describe your approach to..." or "Document the..."
 - Include TODO checklists for items requiring decisions
-
 **Be architecture-agnostic:**
 - Don't assume web apps, APIs, or specific patterns
 - Adapt document generation to project type
 - Create only relevant optional documents
 - Scale complexity to project size
-
 **Focus on guidance:**
 - Each document should teach what to document
 - Explain why each section matters
 - Provide structure without dictating content
 - Enable users to make informed decisions
+- Include TODO checklists for decisions
 
 ### File Management
-
 - Use Write tool to create new files
 - Use List tool to check existing files
 - Never overwrite without explicit user confirmation
 - Preserve any existing user content
 
 ### User Interaction
-
-- **PATH A (Refine):** Present findings and ask for confirmation before updating
-- **PATH B (Create):** Keep initial questions minimal (2 broad questions), follow with focused questions
+- **PATH A:** Present findings, ask confirmation before updating
+- **PATH B:** Start with 2 broad questions, follow with focused questions only for selected documents
 - Confirm before creating/overwriting files
 - Present clear summaries of actions taken
-- Be ready to iterate if user requests changes
 
 ### Execution Path Requirements
-
-**PATH A - Refine Mode Requirements:**
+**PATH A - Refine Mode:**
 - Must use sub-agents in three phases: Locate → Find Patterns → Analyze
 - Must spawn agents in parallel within each phase (never mix agent types across phases)
-- Must compare codebase reality to documentation before proposing updates
+- Must compare codebase to docs before proposing updates
 - Must preserve user content and maintain document structure
 - Must add timestamps and change notes to updated documents
 
-**PATH B - Create Mode Requirements:**
-- Must start with broad questions before determining document scope
-- Must ask focused follow-up questions only for selected documents
+**PATH B - Create Mode:**
+- Must start with broad questions before determining scope
+- Must ask focused follow-ups only for selected documents
 - Must populate documents with user-provided information from interviews
 - Must use placeholders only for information not gathered in interview
 - Must create only core + applicable optional documents based on project type
