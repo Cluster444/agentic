@@ -6,6 +6,26 @@ The Agentic workflow provides a structured, phase-based approach to software dev
 
 ## Workflow Phases
 
+### 0. Architecture Setup (Optional)
+
+**Purpose**: Establish foundational architecture documentation.
+
+**Command**: `/architecture`
+
+**Process**:
+1. Determines if creating new or refining existing docs
+2. Interviews user about project structure and decisions
+3. Creates comprehensive architecture documents
+4. Provides foundation for all subsequent phases
+
+**Output**: `thoughts/architecture/*.md`
+
+**Key Points**:
+- Recommended for new projects or major refactors
+- Can be refined as implementation evolves
+- Referenced by research, plan, and execute commands
+- Serves as single source of truth for design decisions
+
 ### 1. Research Phase
 
 **Purpose**: Understand the codebase and gather context for implementation.
@@ -123,6 +143,8 @@ Agents automatically compress context by:
 ## Decision Flow
 
 ```
+Architecture Setup (Optional)
+    ↓
 Ticket Created
     ↓
 Research Phase → Research Document
