@@ -8,32 +8,112 @@ You are creating the foundational architecture documentation structure for a pro
 
 ## Steps to follow:
 
-### 1. Check for existing architecture
+### 1. Determine execution mode
 
 Check if `thoughts/architecture/` directory exists and contains files.
 
-If files exist:
+**PATH A - If architecture files exist (REFINE MODE):**
 - List existing files to the user
-- Ask: "Architecture documentation already exists. Would you like to (1) Skip and keep existing, (2) Add missing files only, or (3) Regenerate all files?"
-- Proceed based on user choice
+- Inform: "Architecture documentation found. I can analyze the codebase and update these documents to align with current implementation."
+- Ask: "Would you like to: (1) Skip refinement, (2) Refine existing documents based on codebase analysis?"
+- If user chooses refinement, proceed to **Step 2A: Refine Existing Architecture**
+- If user skips, exit gracefully
 
-If directory doesn't exist, proceed to create it.
+**PATH B - If no architecture files exist (CREATE MODE):**
+- Inform: "No architecture documentation found. I'll help you create it."
+- Proceed to **Step 2B: Gather Project Context**
 
-### 2. Gather project context
+---
 
-Ask focused questions to understand the project:
+### 2A. Refine Existing Architecture (PATH A only)
 
-1. What is this project? (Brief description of purpose and scope)
-2. What is the primary tech stack? (Languages, frameworks, key libraries)
-3. Does this project have: APIs, CLI, event-driven components, or other interfaces?
+**Phase 1 - Locate (Codebase & Architecture):**
+- Spawn **codebase-locator** agents in parallel to discover:
+  - Main application entry points
+  - Key module and component locations
+  - Infrastructure configuration files
+  - Testing setup and conventions
+- Spawn **thoughts-locator** agent to analyze existing architecture documents
+- **WAIT** for all locator agents to complete
 
-Keep questions minimal and focused. Use responses to determine which documents to create.
+**Phase 2 - Find Patterns (Codebase only):**
+- Based on locator results, spawn **codebase-pattern-finder** agents in parallel to identify:
+  - Architectural patterns in use
+  - Testing patterns and conventions
+  - API/CLI design patterns (if applicable)
+  - Data persistence patterns
+- **WAIT** for all pattern-finder agents to complete
 
-### 3. Create architecture directory structure
+**Phase 3 - Analyze (Codebase & Architecture):**
+- Spawn **codebase-analyzer** agents in parallel to understand:
+  - Current system architecture and stack
+  - Domain model implementation
+  - Development workflow artifacts
+  - Persistence layer details
+- Spawn **thoughts-analyzer** agent to extract key insights from existing architecture docs
+- **WAIT** for all analyzer agents to complete
 
-Create `thoughts/architecture/` directory if it doesn't exist.
+**Synthesize and Update:**
+- Compare codebase reality with existing architecture documentation
+- Identify discrepancies, outdated information, and missing details
+- Present findings to user with specific update recommendations
+- Ask: "I found [N] areas where documentation differs from implementation. Update all, select specific documents, or cancel?"
+- Update selected documents with current codebase information
+- Preserve user-added content and TODOs where applicable
+- Add update timestamp and changelog notes to modified documents
+- Skip to **Step 7: Present Completion Summary**
 
-### 4. Generate core architecture documents
+---
+
+### 2B. Gather Project Context (PATH B only)
+
+**Broad Discovery Phase:**
+
+Ask minimal high-level questions first:
+
+1. What is this project's primary purpose and domain? (e.g., "API for managing e-commerce orders", "CLI tool for data analysis")
+2. What technology stack is in use? (Languages, frameworks, key libraries)
+
+**Determine Document Scope:**
+
+Based on responses, determine which architectural documents are necessary:
+- Core documents (always created): overview, system-architecture, domain-model, testing-strategy, development-workflow, persistence
+- Optional documents (conditionally created):
+  - `api-design.md` if project has REST/GraphQL APIs
+  - `cli-design.md` if project has CLI interface
+  - `event-bus.md` if project uses event-driven architecture
+
+**Focused Follow-up Phase:**
+
+For each document to be created, ask targeted questions:
+
+For `system-architecture.md`:
+- What versions of key technologies are in use?
+- Are there specific infrastructure dependencies (databases, caches, message queues)?
+- What build/deployment tooling is configured?
+
+For `domain-model.md`:
+- What are the core business entities?
+- Are there critical business rules or constraints?
+- What are the main user workflows?
+
+For `persistence.md`:
+- What data storage technologies are in use?
+- Is there a migration strategy in place?
+- Are there caching or performance considerations?
+
+For optional documents (only if applicable):
+- API: Authentication approach? Versioning strategy? Error handling patterns?
+- CLI: Command structure? Configuration approach? Output formats?
+- Events: Event types? Publishing patterns? Error handling?
+
+Keep follow-up questions focused and skip those where answers are obvious from earlier responses.
+
+### 3. Create architecture directory structure (PATH B only)
+
+Create `thoughts/architecture/` directory.
+
+### 4. Generate core architecture documents (PATH B only)
 
 Create these **required** documents with appropriate placeholder content:
 
@@ -78,9 +158,9 @@ Create these **required** documents with appropriate placeholder content:
 - Caching approach
 - Backup and recovery procedures
 
-### 5. Generate optional documents based on context
+### 5. Generate optional documents based on context (PATH B only)
 
-Based on user's responses in step 2, create applicable optional documents:
+Based on user's responses in step 2B, create applicable optional documents:
 
 **thoughts/architecture/api-design.md** (if project has APIs)
 - Endpoint design patterns
@@ -100,7 +180,7 @@ Based on user's responses in step 2, create applicable optional documents:
 - Publishing and subscription patterns
 - Error handling and retries
 
-### 6. Populate documents with project-specific content
+### 6. Populate documents with project-specific content (PATH B only)
 
 For each document created:
 
@@ -116,11 +196,11 @@ For each document created:
 
 ## [Section 1]
 
-[Content based on user's project context]
+[Content based on user's project context from step 2B]
 
 ## [Section 2]
 
-[Content based on user's project context]
+[Content based on user's project context from step 2B]
 
 ## TODO
 
@@ -132,19 +212,39 @@ For each document created:
 - [Link to related architecture document]
 ```
 
-2. Use placeholder text that prompts users to fill in specifics:
-   - "Describe the primary programming language and version"
-   - "List key frameworks and explain their usage"
-   - "Document database choice and rationale"
+2. Use responses from step 2B to populate content:
+   - Incorporate technology stack details
+   - Document infrastructure dependencies mentioned
+   - Include business entities and workflows described
+   - Reflect build/deployment tooling discussed
 
-3. Include concrete examples only where universally applicable
-4. Add TODO sections for project-specific decisions
+3. Use placeholder text only for areas not covered in interview:
+   - "Describe [specific aspect not yet discussed]"
+   - "Document [decision to be made later]"
+
+4. Add TODO sections for project-specific decisions still needed
 5. Cross-reference related documents
 
 ### 7. Present completion summary
 
-Show user what was created:
+**For PATH A (Refine Mode):**
+```markdown
+Architecture documentation updated in thoughts/architecture/
 
+Documents refined:
+  ✓ [list of updated documents with brief change summary]
+
+Changes made:
+  - [summary of key updates]
+  - [alignment improvements]
+
+Next steps:
+1. Review updated content for accuracy
+2. Address any new TODO items added
+3. Continue iterating as implementation evolves
+```
+
+**For PATH B (Create Mode):**
 ```markdown
 Architecture documentation initialized in thoughts/architecture/
 
@@ -163,12 +263,12 @@ Optional documents created:
 
 Next steps:
 1. Review each document and fill in TODO sections
-2. Replace placeholder text with project-specific details
+2. Refine details as implementation progresses
 3. Update documents as architectural decisions are made
 4. These docs will be referenced by /research, /plan, and /execute commands
 ```
 
-Use the todowrite tool to create a structured task list for the 7 steps above, marking each as pending initially.
+Use the todowrite tool to create a structured task list, marking each as pending initially. Task list will vary based on execution path.
 
 ## Important Guidelines
 
@@ -201,10 +301,27 @@ Use the todowrite tool to create a structured task list for the 7 steps above, m
 
 ### User Interaction
 
-- Keep initial questions minimal (3-4 max)
+- **PATH A (Refine):** Present findings and ask for confirmation before updating
+- **PATH B (Create):** Keep initial questions minimal (2 broad questions), follow with focused questions
 - Confirm before creating/overwriting files
 - Present clear summaries of actions taken
 - Be ready to iterate if user requests changes
+
+### Execution Path Requirements
+
+**PATH A - Refine Mode Requirements:**
+- Must use sub-agents in three phases: Locate → Find Patterns → Analyze
+- Must spawn agents in parallel within each phase (never mix agent types across phases)
+- Must compare codebase reality to documentation before proposing updates
+- Must preserve user content and maintain document structure
+- Must add timestamps and change notes to updated documents
+
+**PATH B - Create Mode Requirements:**
+- Must start with broad questions before determining document scope
+- Must ask focused follow-up questions only for selected documents
+- Must populate documents with user-provided information from interviews
+- Must use placeholders only for information not gathered in interview
+- Must create only core + applicable optional documents based on project type
 
 ### Integration with Workflow
 
