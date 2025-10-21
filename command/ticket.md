@@ -128,7 +128,7 @@ Extract and organize information specifically for the research phase:
 - Security requirements
 
 ### Step 5: Ticket Creation
-Create the ticket file at: `thoughts/tickets/type_subject.md`
+Create the ticket file at: `thoughts/tickets/type-subject-number.md`
 
 Use this template structure:
 
@@ -137,6 +137,7 @@ Use this template structure:
 type: [bug|feature|debt]
 priority: [high|medium|low]
 created: [ISO date]
+created_by: [model-name-and-version]
 status: open
 tags: [relevant-tags]
 keywords: [comma-separated keywords for research]
@@ -233,11 +234,11 @@ Use the todowrite tool to create a structured task list for the 7 steps above, m
 - **Research-friendly**: Include specific hooks for research agents
 
 ### File Naming
-- Use format: `<type>_<subject>.md`
+- Use format: `<type>-<subject>-<number>.md`
 - Examples:
-  - `bug_login_validation.md`
-  - `feature_user_dashboard.md`
-  - `debt_auth_refactor.md`
+  - `bug-login-validation-001.md`
+  - `feature-user-dashboard-002.md`
+  - `debt-auth-refactor-003.md`
 
 ## Examples
 
@@ -247,7 +248,7 @@ Use the todowrite tool to create a structured task list for the 7 steps above, m
 type: bug
 priority: high
 created: 2025-01-15T10:30:00Z
-created_by: Opus
+created_by: Claude Opus 4.1
 status: open
 tags: [auth, login, validation]
 keywords: [login, validateCredentials, error message, authentication]
@@ -309,7 +310,7 @@ Clear error message displayed when credentials are invalid
 type: feature
 priority: medium
 created: 2025-01-15T14:20:00Z
-created_by: Opus
+created_by: Claude Opus 4.1
 status: open
 tags: [ui, dashboard, analytics]
 keywords: [dashboard, analytics, chart, metrics]

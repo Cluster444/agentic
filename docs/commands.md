@@ -47,7 +47,7 @@ Example:
 
 **Example**:
 ```
-/plan thoughts/tickets/eng-123.md thoughts/research/2025-01-15_oauth-research.md
+/plan thoughts/tickets/bug-login-validation-123.md thoughts/research/2025-01-15_oauth-research.md
 ```
 
 **Process**:
@@ -117,7 +117,7 @@ Example:
 4. Documents findings
 5. Provides recommendations
 
-**Output**: `thoughts/reviews/YYYY-MM-DD_review.md`
+**Output**: `thoughts/reviews/[ticket-filename]-review.md`
 
 ## Command Structure
 

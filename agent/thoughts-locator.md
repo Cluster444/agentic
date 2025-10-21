@@ -66,10 +66,10 @@ Structure your findings like this:
 - `thoughts/architecture/core-design.md - Namespace design`
 
 ### Tickets
-- `thoughts/tickets/eng_1234.md` - Implement rate limiting for API
+- `thoughts/tickets/feature-rate-limiting-api-123.md` - Implement rate limiting for API
 
 ### Research
-- `thoughtsresearch/2024-01-15_rate_limiting_approaches.md` - Research on different rate limiting strategies
+- `thoughts/research/2024-01-15_rate-limiting-approaches.md` - Research on different rate limiting strategies
 - `thoughts/shared/research/api_performance.md` - Contains section on rate limiting impact
 
 ### Implementation Plans
