@@ -19,6 +19,27 @@ Example:
 
 ## Available Commands
 
+### architecture command (`/architecture`)
+
+**Purpose**: Initialize or refine architecture documentation for a project.
+
+**Syntax**: `/architecture`
+
+**Example**:
+```
+/architecture
+```
+
+**Process**:
+1. Checks if thoughts/architecture/ exists and contains files
+2. If exists: Offers to refine docs based on codebase analysis
+3. If not: Guides user through creating foundational docs
+4. Spawns specialized agents for codebase/documentation analysis
+5. Creates core documents (overview, system-architecture, domain-model, testing-strategy, development-workflow, persistence)
+6. Optionally creates specialized docs (api-design, cli-design, event-bus)
+
+**Output**: `thoughts/architecture/*.md` files
+
 ### research command (`/research`)
 
 **Purpose**: Comprehensive analysis of codebase and documentation.
