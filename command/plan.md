@@ -11,7 +11,7 @@ You are tasked with creating detailed implementation plans through an interactiv
 ### Step 1: Context Gathering & Initial Analysis
 
 1. **Read all mentioned files immediately and FULLY**:
-   - Ticket files (e.g., `thoughts/tickets/eng_1234.md`)
+   - Ticket files (e.g., `thoughts/tickets/bug-login-validation-456.md`)
    - Research documents
    - Related implementation plans
    - Any JSON/data files mentioned
