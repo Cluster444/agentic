@@ -13,6 +13,7 @@ thoughts/
 ├── research/        # Analysis and findings
 ├── plans/          # Implementation specifications
 ├── reviews/        # Post-implementation validation
+├── docs/           # External web research cache
 └── archive/        # Outdated documents (excluded from searches)
 ```
 
@@ -119,6 +120,29 @@ Any relevant background information
 - Closes the loop on tickets
 - Documents implementation reality
 - Captures improvements for future
+
+### docs/
+
+**Purpose**: Cache external web research to avoid duplicate API calls and preserve sources.
+
+**File Format**: `YYYY-MM-DD_topic.md`
+
+**Content Structure**:
+- Research metadata (date, method, query)
+- Summary of findings
+- Detailed information with citations
+- Source URLs for verification
+
+**Usage**:
+- Automatically populated by `web-search-researcher` agent
+- Checked before new web searches (90-day freshness)
+- Referenced during research and planning phases
+- Provides authoritative external sources
+
+**Important Notes**:
+- Created automatically when web research is performed
+- Can use Perplexity API key to populate
+- Falls under same search patterns as other thoughts directories
 
 ### archive/
 

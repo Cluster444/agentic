@@ -1,0 +1,13 @@
+{
+  "name": "agentic-tools-dependencies",
+  "version": "1.0.0",
+  "description": "Dependencies for agentic OpenCode tools",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@opencode-ai/plugin": "^0.15.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

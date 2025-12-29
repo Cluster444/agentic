@@ -83,18 +83,35 @@ Agents are specialized AI assistants that perform focused tasks within the Agent
 ### Web Agent
 
 #### web-search-researcher
-**Purpose**: Perform web searches and analyze content.
+**Purpose**: Perform intelligent web research with automatic caching and fallback mechanisms.
 
 **Capabilities**:
-- Fetches web pages
-- Analyzes documentation
-- Extracts relevant information
-- Provides summaries
+- Searches using Perplexity API with model selection based on query complexity
+- Caches research in `thoughts/docs/` to avoid duplicate API calls (90-day freshness check)
+- Automatically falls back to alternative search tools or webfetch if Perplexity unavailable
+- Provides properly cited research with source URLs
+
+**Models Used**:
+- `sonar-pro`: Simple factual queries (fastest, most cost-effective)
+- `sonar-reasoning-pro`: Complex comparisons and reasoning tasks
+- `sonar-deep-research`: Comprehensive research requiring in-depth analysis
 
 **Use Cases**:
-- Researching external libraries
-- Finding documentation
-- Gathering best practices
+- Researching external libraries and frameworks
+- Finding best practices and design patterns
+- Gathering documentation from authoritative sources
+- Understanding industry standards and conventions
+
+**Requirements**:
+- `PERPLEXITY_API_KEY` environment variable
+- Tool dependencies installed (`bun install` in `.opencode/`)
+- Custom tools enabled in OpenCode
+
+**Fallback Strategy**:
+1. Primary: Perplexity API with intelligent model selection
+2. Secondary: Alternative web search tools (from MCP servers)
+3. Tertiary: Direct webfetch for single URLs
+4. Reports which method was used in research metadata
 
 ## Agent Coordination
 

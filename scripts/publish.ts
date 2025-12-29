@@ -65,7 +65,7 @@ for (const platform of platforms) {
   );
 
   // Copy agent and command directories to platform package
-  const dirsToCopy = ["agent", "command", "docs"];
+  const dirsToCopy = ["agent", "command", "tool", "docs", "dependencies"];
   for (const dir of dirsToCopy) {
     const srcDir = path.join(process.cwd(), dir);
     const destDir = path.join(pkgDir, dir);
@@ -189,7 +189,7 @@ for (const file of filesToCopy) {
 }
 
 // Copy agent and command directories
-const dirsToCopy = ["agent", "command", "docs"];
+const dirsToCopy = ["agent", "command", "tool", "docs", "dependencies"];
 for (const dir of dirsToCopy) {
   const srcDir = path.join(process.cwd(), dir);
   const destDir = path.join(mainPkgDir, dir);
@@ -270,11 +270,11 @@ if (previousReleaseTag) {
         } : {}
       }
     );
-    
+
     if (response.ok) {
       const data = await response.json() as { commits: Array<{ commit: { message: string } }> };
       const commits = data.commits || [];
-      
+
       const notes = commits
         .map(commit => {
           const msg = commit.commit.message.split('\n')[0]; // First line only
@@ -283,13 +283,13 @@ if (previousReleaseTag) {
         .filter(msg => {
           const lower = msg.toLowerCase();
           return !lower.includes("release:") &&
-                 !lower.includes("chore:") &&
-                 !lower.includes("ci:") &&
-                 !lower.includes("wip:") &&
-                 !lower.includes("docs:") &&
-                 !lower.includes("doc:");
+            !lower.includes("chore:") &&
+            !lower.includes("ci:") &&
+            !lower.includes("wip:") &&
+            !lower.includes("docs:") &&
+            !lower.includes("doc:");
         });
-      
+
       if (notes.length > 0) {
         releaseNotes += notes.join('\n');
       } else {

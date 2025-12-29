@@ -24,6 +24,7 @@ You are tasked with creating detailed implementation plans through an interactiv
    - Use the **codebase-locator** task to find all files related to the files given by the user
    - Use the **codebase-analyzer** task to understand how the current implementation works
    - If relevant, use the **thoughts-locator** task to find any existing thoughts documents about this feature
+   - If relevant, use the **web-search-researcher** task to find additional external authorative context and capture provenance
 
    These agents will:
    - Find relevant source files, configs, and tests
@@ -83,6 +84,7 @@ After getting initial clarifications:
    **For historical context:**
    - **thoughts-locator** - To find any research, plans, or decisions about this area
    - **thoughts-analyzer** - To extract key insights from the most relevant documents
+   - **web-search-researcher** - To pull authoritative external references when needed
 
    Each agent knows how to:
    - Find the right files and code patterns
@@ -230,6 +232,7 @@ After structure approval:
 
 - Original ticket: `thoughts/tickets/eng_XXXX.md`
 - Related research: `thoughts/research/[relevant].md`
+- External sources: `thoughts/docs/YYYY-MM-DD_[relevant].md`
 - Similar implementation: `[file:line]`
 ```
 
