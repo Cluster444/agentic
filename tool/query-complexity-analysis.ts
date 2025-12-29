@@ -1,9 +1,19 @@
 import { tool } from '@opencode-ai/plugin';
 
 export default tool({
-  description: 'Simple heuristic to recommend which Perplexity model to use.',
-  args: {
-    query: tool.schema.string().min(1, 'Query cannot be empty')
+  name: 'query-complexity-analysis',
+  description: 'Simple heuristic to recommend which Perplexity model to use based on query keywords.',
+  parameters: {
+    type: 'object',
+    properties: {
+      query: {
+        type: 'string',
+        minLength: 1,
+        description: 'The user query to analyze for complexity and intent.'
+      }
+    },
+    required: ['query'],
+    additionalProperties: false
   },
   async execute(args) {
     const { query } = args;

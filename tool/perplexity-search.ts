@@ -1,10 +1,26 @@
 import { tool } from '@opencode-ai/plugin';
 
 export default tool({
+  name: 'perplexity-search',
   description: 'Search using Perplexity API with specified model.',
-  args: {
-    query: tool.schema.string().min(1).max(2000, 'Query must be 2000 characters or less'),
-    model: tool.schema.enum(['sonar-pro', 'sonar-reasoning-pro', 'sonar-deep-research']).default('sonar-pro')
+  parameters: {
+    type: 'object',
+    properties: {
+      query: {
+        type: 'string',
+        minLength: 1,
+        maxLength: 2000,
+        description: 'The search query to send to Perplexity.'
+      },
+      model: {
+        type: 'string',
+        enum: ['sonar-pro', 'sonar-reasoning-pro', 'sonar-deep-research'],
+        default: 'sonar-pro',
+        description: 'The specific Perplexity model to use for the search.'
+      }
+    },
+    required: ['query'],
+    additionalProperties: false
   },
   async execute(args) {
     const { query, model } = args;
