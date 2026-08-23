@@ -16,8 +16,17 @@ The Agentic system distributes command files to your project:
 Example:
 - `command/research.md` → `.opencode/command/research.md` → Available as `/research`
 - `command/plan.md` → `.opencode/command/plan.md` → Available as `/plan`
+- `command/gbr.md` → `.opencode/command/gbr.md` → Available as `/gbr`
 
 ## Available Commands
+
+### gbr command (`/gbr`)
+
+**Purpose**: Pair a phone running [Build Remote Agent](https://grokbuildremote.com/) as a spectator for this OpenCode session (`gbr/1`). Phone does not orchestrate; Agentic commands stay in charge.
+
+**Syntax**: `/gbr`
+
+Install `gbr-agent` v0.6.0+, run `gbr-agent pair` (QR + 8-char code) then `gbr-agent run`. Attach only at `http://127.0.0.1:8788` or MCP stdio `gbr-mcp`. Never put mailbox keys in git. Independent product; not affiliated with xAI or SpaceX.
 
 ### research command (`/research`)
 
