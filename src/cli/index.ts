@@ -39,6 +39,9 @@ try {
         type: "boolean",
         default: false,
       },
+      "config-dir": {
+        type: "string",
+      },
     },
     strict: true,
     allowPositionals: true,
@@ -120,9 +123,20 @@ switch (command) {
     }
 
     if (command === "pull") {
-      await pull(projectPath, values.global, values["agent-model"], values["ignore-frontmatter"]);
+      await pull(
+        projectPath,
+        values.global,
+        values["agent-model"],
+        values["ignore-frontmatter"],
+        values["config-path"],
+      );
     } else if (command === "status") {
-      await status(projectPath, values.global, values["agent-model"], values["ignore-frontmatter"]);
+      await status(
+        projectPath,
+        values.global,
+        values["agent-model"],
+        values["ignore-frontmatter"],
+      );
     }
     break;
   case "config":
