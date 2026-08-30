@@ -16,7 +16,7 @@ bun link  # Makes 'agentic' available globally
 
 ### `agentic pull [project-path]`
 
-Pulls the latest agents and commands to a project's `.opencode` directory.
+Pulls the latest agents and commands to a project's `.opencode` directory, or to a global/custom OpenCode config directory with `-g`/`--config-dir`.
 
 **Usage:**
 ```bash
@@ -29,13 +29,21 @@ agentic pull ~/projects/my-app
 
 # Pull ignoring YAML frontmatter changes
 agentic pull --ignore-frontmatter
+
+# Pull to the global config directory
+agentic pull -g
+
+# Pull to a custom config directory
+agentic pull --config-dir ~/.config/opencode/profiles/agentic
 ```
 
 **Options:**
+- `-g, --global`: Pull to the global OpenCode config directory (resolved via `OPENCODE_CONFIG_DIR` or `~/.config/opencode`) instead of a project's `.opencode`
+- `--config-dir <path>`: Pull to a specific config directory, overriding the global default
 - `--ignore-frontmatter`: Ignore YAML frontmatter in Markdown (.md) files when comparing and preserve target frontmatter during pull
 
 **What it does:**
-- Creates `.opencode` directory if it doesn't exist
+- Creates the target directory if it doesn't exist
 - Copies all files from `agent/` and `command/` directories
 - Preserves directory structure
 - Reports progress for each file copied
@@ -44,14 +52,13 @@ agentic pull --ignore-frontmatter
 **Output:**
 ```
 📦 Pulling to: /home/user/projects/my-app/.opencode
-📁 Including: agent, command
 
-  ✓ Copied: agent/codebase-analyzer.md
-  ✓ Copied: agent/codebase-locator.md
-  ✓ Copied: command/research.md
-  ✓ Copied: command/plan.md
+📁 Found 3 file(s) to update
 
-✅ Pulled 10 files
+  ✓ Added: agent/codebase-analyzer.md
+  ✓ Updated: command/research.md
+
+✅ Updated 2 files
 ```
 
 ### `agentic status [project-path]`
@@ -69,13 +76,21 @@ agentic status ~/projects/my-app
 
 # Check status ignoring YAML frontmatter changes
 agentic status --ignore-frontmatter
+
+# Check status of the global config directory
+agentic status -g
+
+# Check status of a custom config directory
+agentic status --config-dir ~/.config/opencode/profiles/agentic
 ```
 
 **Options:**
+- `-g, --global`: Check the global OpenCode config directory (resolved via `OPENCODE_CONFIG_DIR` or `~/.config/opencode`) instead of a project's `.opencode`
+- `--config-dir <path>`: Check a specific config directory, overriding the global default
 - `--ignore-frontmatter`: Ignore YAML frontmatter in Markdown (.md) files when comparing
 
 **What it does:**
-- Compares files in `.opencode` with source repository
+- Compares files in `.opencode` (or the global/custom config directory) with source repository
 - Identifies missing, outdated, or extra files
 - Uses SHA-256 hashing for content comparison
 - When `--ignore-frontmatter` is used: treats files with only frontmatter changes as up-to-date
@@ -83,20 +98,18 @@ agentic status --ignore-frontmatter
 **Output:**
 ```
 📊 Status for: /home/user/projects/my-app/.opencode
-📁 Checking: agent, command
 
 ✅ agent/codebase-analyzer.md
-✅ agent/codebase-locator.md
-❌ command/research.md (outdated)
-❌ command/execute.md (missing in project)
+⚠️  command/research.md (outdated)
+❌ command/execute.md (missing)
 
 📋 Summary:
-  ✅ Up-to-date: 2
-  ❌ Outdated: 1
+  ✅ Up-to-date: 1
+  ⚠️  Outdated: 1
   ❌ Missing: 1
 
-⚠️  2 files need attention
-Run 'agentic pull' to update the project
+⚠️  2 files need updating
+Run 'agentic pull' to sync the files
 ```
 
 ### `agentic metadata`
@@ -150,6 +163,34 @@ agentic version
 agentic --version
 ```
 
+## Global and custom config directories
+
+By default, `pull` and `status` operate on a project's `.opencode` directory. Use `-g/--global` to operate on the global OpenCode config directory instead, or `--config-dir <path>` to target an explicit directory (for example, an OpenCode profile).
+
+The target config directory is resolved with the following precedence:
+
+1. `--config-dir <path>` — explicit flag, highest priority
+2. `OPENCODE_CONFIG_DIR` — environment variable, used when the global config lives somewhere other than the default
+3. `~/.config/opencode` — the default global location
+
+**Examples:**
+
+```bash
+# Global deployment (uses OPENCODE_CONFIG_DIR if defined, otherwise ~/.config/opencode)
+agentic pull -g
+agentic status -g
+
+# Custom config directory (e.g. an OpenCode profile)
+agentic pull --config-dir ~/.config/opencode/profiles/agentic
+agentic status --config-dir ~/.config/opencode/profiles/agentic
+```
+
+**Notes:**
+
+- `--config-dir` cannot be combined with a project path
+- When both `-g` and `--config-dir` are given, `--config-dir` takes precedence
+- `-g` and `--config-dir` bypass project auto-detection entirely
+
 ## Auto-detection
 
 The CLI uses intelligent project detection:
@@ -157,20 +198,31 @@ The CLI uses intelligent project detection:
 1. **With path argument**: Uses the provided path directly
 2. **Without argument**: Searches upward from current directory for `.opencode`
 3. **Stops at**: Home directory boundary (won't search outside `$HOME`)
+4. **With `-g`/`--config-dir`**: Bypasses detection and targets the global/custom config directory directly
 
 ## Configuration
 
-The CLI reads configuration from `config.json` in the agentic repository:
+Per-project configuration is read from `.opencode/agentic.json`:
 
 ```json
 {
-  "pull": {
-    "include": ["agent", "command"]
+  "thoughts": "thoughts",
+  "agents": {
+    "model": "opencode/grok-code"
   }
 }
 ```
 
-Currently, this specifies which directories to include when pulling.
+- `thoughts`: relative path to the project's thoughts directory (used by `init`)
+- `agents.model`: default agent model applied to agents during `pull` and `status`
+
+The agent model is resolved with the following priority:
+
+1. `--agent-model` (CLI flag)
+2. `agents.model` in `agentic.json`
+3. No model substitution
+
+The directories synced by `pull` and `status` (`agent` and `command`) are currently fixed in the source.
 
 ## Error Handling
 
