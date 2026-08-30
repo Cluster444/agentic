@@ -39,6 +39,9 @@ try {
         type: "boolean",
         default: false,
       },
+      "config-dir": {
+        type: "string",
+      },
     },
     strict: true,
     allowPositionals: true,
@@ -83,7 +86,8 @@ Commands:
 
 Options:
   -h, --help             Show this help message
-  -g, --global           Use ~/.config/opencode instead of .opencode directory
+  -g, --global           Use the global OpenCode config directory (OPENCODE_CONFIG_DIR or ~/.config/opencode) instead of .opencode directory
+  --config-dir <path>    Use a custom config directory instead of the default global one
   --version              Show the version of agentic
   --thoughts-dir         Specify thoughts directory (for init command)
   --agent-model          Specify model for subagents (for status and pull commands)
@@ -94,10 +98,12 @@ Examples:
   agentic init ~/projects/my-app     # Initialize in specific project
   agentic pull ~/projects/my-app
   agentic pull                       # Auto-detect project from current dir
-  agentic pull -g                    # Pull to ~/.config/opencode
+  agentic pull -g                    # Pull to global config dir (OPENCODE_CONFIG_DIR or ~/.config/opencode)
+  agentic pull --config-dir ~/.config/opencode/profiles/agentic
   agentic status ~/projects/my-app
   agentic status                     # Auto-detect project from current dir
-  agentic status -g                  # Check status of ~/.config/opencode
+  agentic status -g                  # Check status of global config dir (OPENCODE_CONFIG_DIR or ~/.config/opencode)
+  agentic status --config-dir ~/.config/opencode/profiles/agentic
   agentic config                     # Show current configuration
   agentic config agent.model         # Show current agent model
   agentic config agent.model opus-4-1 # Set agent model to opus-4-1
@@ -120,9 +126,20 @@ switch (command) {
     }
 
     if (command === "pull") {
-      await pull(projectPath, values.global, values["agent-model"], values["ignore-frontmatter"]);
+      await pull(
+        projectPath,
+        values.global,
+        values["agent-model"],
+        values["ignore-frontmatter"],
+        values["config-path"],
+      );
     } else if (command === "status") {
-      await status(projectPath, values.global, values["agent-model"], values["ignore-frontmatter"]);
+      await status(
+        projectPath,
+        values.global,
+        values["agent-model"],
+        values["ignore-frontmatter"],
+      );
     }
     break;
   case "config":

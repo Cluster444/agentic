@@ -47,11 +47,32 @@ bun link  # Makes 'agentic' command available globally
 
 ### Deploy globally
 
-This will pull all agents/commands into your global `~/.config/opencode/` directory.
+This will pull all agents/commands into your global OpenCode config directory. By default this is `~/.config/opencode/`; if the `OPENCODE_CONFIG_DIR` environment variable is defined, that directory is used instead.
 
 ```bash
 agentic pull -g
 ```
+
+### Deploy to a custom config directory
+
+When OpenCode reads its configuration from a directory other than the global default, point agentic at it with `--config-dir`:
+
+```bash
+agentic pull --config-dir ~/.config/opencode/profiles/agentic
+agentic status --config-dir ~/.config/opencode/profiles/agentic
+```
+
+This is useful for:
+- OpenCode profile managers
+- Isolated configurations
+- Testing
+- Setups where OpenCode does not use the global config directory by default
+
+The config directory is resolved with the following precedence:
+
+1. `--config-dir` (explicit flag)
+2. `OPENCODE_CONFIG_DIR` (environment variable)
+3. `~/.config/opencode` (default)
 
 ### Deploy to Your Project
 
